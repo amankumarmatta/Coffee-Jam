@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 343cac5488a15e440aee52eda3101ecf, type: 3}
+  m_Name: LevelLayout
+  m_EditorClassIdentifier: 
+  trays:
+  - gridPosition: {x: 0, y: 0}
+    trayType: 0
+  - gridPosition: {x: 1, y: 1}
+    trayType: 1
+  - gridPosition: {x: 4, y: 2}
+    trayType: 2
+  - gridPosition: {x: 2, y: 1}
+    trayType: 3
+  - gridPosition: {x: 1, y: 2}
+    trayType: 4
+  - gridPosition: {x: 3, y: 2}
+    trayType: 5
+  - gridPosition: {x: 0, y: 2}
+    trayType: 6
+  - gridPosition: {x: 0, y: 3}
+    trayType: 7
+  - gridPosition: {x: 2, y: 3}
+    trayType: 8
+  - gridPosition: {x: 3, y: 5}
+    trayType: 9
+  - gridPosition: {x: 1, y: 4}
+    trayType: 10
+  - gridPosition: {x: 0, y: 5}
+    trayType: 11
+  - gridPosition: {x: 1, y: 5}
+    trayType: 12
+  - gridPosition: {x: 2, y: 6}
+    trayType: 13
+  - gridPosition: {x: 3, y: 6}
+    trayType: 14
