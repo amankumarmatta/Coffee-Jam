@@ -167,10 +167,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 3098903295728770638, guid: b34f7d2c14c0566499c83fc994d87ee7, type: 3}
-  columns: 5
-  rows: 7
+  columns: 7
+  rows: 9
   tileSize: 1
-  zPosition: 0
+  zPosition: 1
   trayLayout: {fileID: 11400000, guid: 47100be7192735d45ab7e34a9889b67d, type: 2}
   trayPrefabs:
   - {fileID: 7695906448512401856, guid: 9e0eef78cbea96c478d0dacb780ca9c5, type: 3}
@@ -310,7 +310,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

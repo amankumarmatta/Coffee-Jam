@@ -13,33 +13,33 @@ MonoBehaviour:
   m_Name: LevelLayout
   m_EditorClassIdentifier: 
   trays:
-  - gridPosition: {x: 0, y: 0}
-    trayType: 0
   - gridPosition: {x: 1, y: 1}
+    trayType: 0
+  - gridPosition: {x: 2, y: 2}
     trayType: 1
-  - gridPosition: {x: 4, y: 2}
+  - gridPosition: {x: 5, y: 3}
     trayType: 2
-  - gridPosition: {x: 2, y: 1}
-    trayType: 3
-  - gridPosition: {x: 1, y: 2}
-    trayType: 4
   - gridPosition: {x: 3, y: 2}
-    trayType: 5
-  - gridPosition: {x: 0, y: 2}
-    trayType: 6
-  - gridPosition: {x: 0, y: 3}
-    trayType: 7
+    trayType: 3
   - gridPosition: {x: 2, y: 3}
-    trayType: 8
-  - gridPosition: {x: 3, y: 5}
-    trayType: 9
+    trayType: 4
+  - gridPosition: {x: 4, y: 3}
+    trayType: 5
+  - gridPosition: {x: 1, y: 3}
+    trayType: 6
   - gridPosition: {x: 1, y: 4}
+    trayType: 7
+  - gridPosition: {x: 3, y: 4}
+    trayType: 8
+  - gridPosition: {x: 4, y: 6}
+    trayType: 9
+  - gridPosition: {x: 2, y: 5}
     trayType: 10
-  - gridPosition: {x: 0, y: 5}
+  - gridPosition: {x: 1, y: 6}
     trayType: 11
-  - gridPosition: {x: 1, y: 5}
+  - gridPosition: {x: 3, y: 7}
     trayType: 12
   - gridPosition: {x: 2, y: 6}
     trayType: 13
-  - gridPosition: {x: 3, y: 6}
+  - gridPosition: {x: 4, y: 7}
     trayType: 14
