@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+
+
 public class GridManager : MonoBehaviour
 {
     public static GridManager Instance;
@@ -8,7 +10,7 @@ public class GridManager : MonoBehaviour
     public int columns = 5;
     public int rows = 5;
     public float tileSize = 1f;
-    public float zPosition = 0f; 
+    public float zPosition = 0f;  
     [Header("Tray Settings")]
     public TrayLayout trayLayout;
     public GameObject[] trayPrefabs;
@@ -31,18 +33,16 @@ public class GridManager : MonoBehaviour
         }
         gridTiles.Clear();
         Vector3 startPos = transform.position - new Vector3(
-            (columns * tileSize) / 2f - tileSize/2f, 
-            (rows * tileSize) / 2f - tileSize/2f,
+            (columns * tileSize) / 2f - tileSize / 2f, 
+            (rows * tileSize) / 2f - tileSize / 2f,
             0);
         for (int x = 0; x < columns; x++)
         {
             for (int y = 0; y < rows; y++)
             {
-                Vector3 pos = startPos + new Vector3(
-                    x * tileSize, 
-                    y * tileSize, 
-                    zPosition);
+                Vector3 pos = startPos + new Vector3(x * tileSize, y * tileSize, zPosition);
                 GameObject tile = Instantiate(tilePrefab, pos, Quaternion.identity, transform);
+                tile.GetComponent<SpriteRenderer>().sortingOrder = -1;  
                 gridTiles.Add(new Vector2Int(x, y), tile);
             }
         }
@@ -63,34 +63,40 @@ public class GridManager : MonoBehaviour
     void SpawnTray(Vector2Int gridPos, int trayType)
     {
         Vector3 worldPos = GridToWorldPosition(gridPos);
-        Quaternion rotation = Quaternion.Euler(-90f, 0f, 0f);
+        Quaternion rotation = Quaternion.Euler(0f, 0f, 0f); 
         GameObject tray = Instantiate(trayPrefabs[trayType], worldPos, rotation);
         if (trayColors != null && trayType < trayColors.Length)
         {
             Color trayColor = trayColors[trayType];
             SetColorForAllChildren(tray, trayColor);
         }
-        BoxCollider2D collider = tray.GetComponent<BoxCollider2D>();
-        if (collider == null) 
+        foreach (Transform child in tray.transform)
         {
-            collider = tray.AddComponent<BoxCollider2D>();
-            collider.size = new Vector2(tileSize, tileSize);
+            BoxCollider2D collider = child.GetComponent<BoxCollider2D>();
+            if (collider == null)
+            {
+                collider = child.gameObject.AddComponent<BoxCollider2D>();
+            }
+        }
+        foreach (Transform child in tray.transform)
+        {
+            BoxCollider2D collider = child.GetComponent<BoxCollider2D>();
+            collider.size = new Vector2(tileSize, tileSize);  
+            collider.offset = Vector2.zero;  
         }
         TrayController controller = tray.GetComponent<TrayController>();
-        if (controller == null) controller = tray.AddComponent<TrayController>();
+        if (controller == null)
+        {
+            controller = tray.AddComponent<TrayController>();
+        }
         controller.gridPosition = gridPos;
     }
     private void SetColorForAllChildren(GameObject parent, Color color)
     {
-        Renderer[] renderers = parent.GetComponentsInChildren<Renderer>(true); 
-        foreach (Renderer renderer in renderers)
+        SpriteRenderer[] spriteRenderers = parent.GetComponentsInChildren<SpriteRenderer>(true); 
+        foreach (SpriteRenderer renderer in spriteRenderers)
         {
-            Material[] materials = renderer.materials; 
-            for (int i = 0; i < materials.Length; i++)
-            {
-                materials[i].color = color;
-            }
-            renderer.materials = materials;
+            renderer.color = color;
         }
     }
     public Vector3 GridToWorldPosition(Vector2Int gridPos)
@@ -99,10 +105,7 @@ public class GridManager : MonoBehaviour
             (columns * tileSize) / 2f - tileSize/2f, 
             (rows * tileSize) / 2f - tileSize/2f,
             0);
-        return startPos + new Vector3(
-            gridPos.x * tileSize, 
-            gridPos.y * tileSize, 
-            zPosition);
+        return startPos + new Vector3(gridPos.x * tileSize, gridPos.y * tileSize, zPosition);
     }
     public Vector2Int WorldToGridPosition(Vector3 worldPos)
     {

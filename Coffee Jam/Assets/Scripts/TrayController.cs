@@ -1,27 +1,29 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
-public class TrayController : MonoBehaviour, IDragHandler, IEndDragHandler
+
+
+public class TrayController : MonoBehaviour
 {
     public Vector2Int gridPosition;
-    private bool isDragging;
     private Vector3 offset;
+    private bool isDragging;
     private void Start()
     {
-        transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
     }
-    public void OnDrag(PointerEventData eventData)
+    private void OnMouseDown()
     {
-        if (!isDragging)
-        {
-            isDragging = true;
-            offset = transform.position - Camera.main.ScreenToWorldPoint(
-                new Vector3(eventData.position.x, eventData.position.y, 10f));
-        }
-        Vector3 cursorPoint = new Vector3(eventData.position.x, eventData.position.y, 10f);
-        Vector3 cursorWorldPos = Camera.main.ScreenToWorldPoint(cursorPoint);
-        transform.position = cursorWorldPos + offset;
+        isDragging = true;
+        offset = transform.position - GetMouseWorldPosition();
     }
-    public void OnEndDrag(PointerEventData eventData)
+    private void OnMouseDrag()
+    {
+        if (!isDragging) return;
+        Vector3 mouseWorldPos = GetMouseWorldPosition();
+        Vector3 targetPos = mouseWorldPos + offset;
+        targetPos.z = -1f;  
+        transform.position = targetPos;
+    }
+    private void OnMouseUp()
     {
         isDragging = false;
         SnapToGrid();
@@ -38,14 +40,16 @@ public class TrayController : MonoBehaviour, IDragHandler, IEndDragHandler
         {
             transform.position = GridManager.Instance.GridToWorldPosition(gridPosition);
         }
-        transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private Vector3 GetMouseWorldPosition()
     {
-        if (collision.gameObject.CompareTag("Tray") && !isDragging)
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        float trayY = transform.position.y;
+        Plane dragPlane = new Plane(Vector3.up, new Vector3(0, trayY, 0));
+        if (dragPlane.Raycast(ray, out float distance))
         {
-            Vector2 pushDirection = (collision.transform.position - transform.position).normalized;
-            collision.gameObject.transform.Translate(pushDirection * 0.1f);
+            return ray.GetPoint(distance);
         }
+        return Vector3.zero;
     }
 }
